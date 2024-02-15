@@ -19,8 +19,12 @@ class RegisterProfile extends Register
         return $form
             ->schema([
                 TextInput::make('nickname')
-                    ->hint('Esse nome será exibido em seu link personalizado')
+                    ->label('Seu nickname')
                     ->required()
+                    ->validationMessages([
+                        'unique' => 'Este nickname já está em uso.',
+                    ])
+                    ->unique('users', 'nickname')
                     ->maxLength(255),
                 $this->getNameFormComponent()
                     ->label('Seu nome')

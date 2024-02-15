@@ -9,6 +9,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Pages\Auth\EditProfile as BaseEditProfile;
 use Illuminate\Support\Facades\Hash;
 
@@ -32,6 +33,12 @@ class EditProfile extends BaseEditProfile
                     ->columnSpanFull(),
                 TextInput::make('nickname')
                     ->required()
+                    ->validationMessages([
+                        'unique' => 'Este nickname já está em uso.',
+                    ])->afterStateUpdated(function ($state, Set $set) {
+                        $set('profile_link', url('/') . '/' . $state);
+                    })->reactive()
+                    ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 $this->getNameFormComponent()
                     ->label('Seu nome')
@@ -52,6 +59,7 @@ class EditProfile extends BaseEditProfile
                 ColorPicker::make('secondary_color')
                     ->label('Cor secundária')
                     ->required(),
+                TextInput::make('profile_link')->label('Link para seu perfil')->readOnly()->columnSpanFull()->inlineLabel(false),
                 Textarea::make('bio')
                     ->label('Sua bio')
                     ->inlineLabel(false)

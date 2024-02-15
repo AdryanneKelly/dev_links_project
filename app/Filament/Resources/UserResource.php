@@ -14,6 +14,8 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\Alignment;
@@ -24,12 +26,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Validation\Rule;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
     {
@@ -55,8 +58,15 @@ class UserResource extends Resource
                     ->maxLength(255),
                 TextInput::make('nickname')
                     ->label('Seu nickname')
-                    ->hint('Esse nome será exibido em sua página de links')
+                    ->hint('Esse nick será usado para montar o link do seu perfil.')
+                    ->validationMessages([
+                        'unique' => 'Este nickname já está em uso.',
+                    ])
+                    ->unique(ignoreRecord: true)
                     ->required()
+                    ->afterStateUpdated(function (Get $get, $state, Set $set) {
+                        $set('profile_link', url('/') . '/' . $state);
+                    })->reactive()
                     ->maxLength(255),
                 Select::make('user_type')->label('Tipo de usuário')
                     ->options([
@@ -68,14 +78,17 @@ class UserResource extends Resource
                     ->password()
                     ->dehydrateStateUsing(fn($state) => Hash::make($state))
                     ->dehydrated(fn($state) => filled($state))
-                    ->required(fn(string $context): bool => $context === 'create')
-                    ->disabled(fn(string $context): bool => auth()->id() != request()->route('record')),
+                    ->required(fn(string $context): bool => $context === 'create'),
+                // ->disabled(fn(): bool => auth()->id() != request()->route('record')),
                 ColorPicker::make('primary_color')
                     ->label('Cor principal')
                     ->required(),
                 ColorPicker::make('secondary_color')
                     ->label('Cor secundária')
                     ->required(),
+                TextInput::make('profile_link')
+                    ->label('Link para seu perfil')
+                    ->readOnly(),
                 Textarea::make('bio')
                     ->label('Sua bio')
                     ->required()
