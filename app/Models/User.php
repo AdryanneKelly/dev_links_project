@@ -26,6 +26,7 @@ class User extends Authenticatable
         'avatar',
         'primary_color',
         'secondary_color',
+        'user_type'
     ];
 
     /**
@@ -47,4 +48,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function links()
+    {
+        return $this->hasMany(Link::class, 'users_id');
+    }
 }

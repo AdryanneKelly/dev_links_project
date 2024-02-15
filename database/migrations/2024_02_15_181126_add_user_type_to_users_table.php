@@ -10,13 +10,8 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('links', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('users_id')->constrained();
-            $table->string('title');
-            $table->longText('url');
-            $table->longText('icon');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->enum('user_type', ['admin', 'user'])->default('user')->after('password');
         });
     }
 
@@ -25,6 +20,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('links');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };
