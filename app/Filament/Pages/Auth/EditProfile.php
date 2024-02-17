@@ -33,10 +33,11 @@ class EditProfile extends BaseEditProfile
                     ->columnSpanFull(),
                 TextInput::make('nickname')
                     ->required()
+                    ->helperText('Esse nick será usado para montar o link do seu perfil e não deve conter espaços ou acentos. Ex: joao_silva')
                     ->validationMessages([
                         'unique' => 'Este nickname já está em uso.',
                     ])->afterStateUpdated(function ($state, Set $set) {
-                        $set('profile_link', url('/') . '/' . $state);
+                        $set('profile_link', url('/') . '/dev/' . $state);
                     })->reactive()
                     ->unique(ignoreRecord: true)
                     ->maxLength(255),

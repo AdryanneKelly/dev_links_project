@@ -27,7 +27,10 @@ class User extends Authenticatable
         'primary_color',
         'secondary_color',
         'user_type',
-        'profile_link'
+        'profile_link',
+        'text_color',
+        'menu_color',
+        'occupation',
     ];
 
     /**

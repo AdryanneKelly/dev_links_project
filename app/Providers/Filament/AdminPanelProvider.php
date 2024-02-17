@@ -60,7 +60,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('DevLinks')
             ->navigationItems([
                 NavigationItem::make('profile')
-                    ->label('Profile')
+                    ->label('Perfil')
                     ->icon('heroicon-o-user')
                     ->url('/admin/profile'),
             ]);

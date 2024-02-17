@@ -11,6 +11,8 @@ use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -32,89 +34,139 @@ use Illuminate\Validation\Rule;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
+
+    protected static ?string $modelLabel = 'Usuários';
+
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                FileUpload::make('avatar')->label('Escolha a foto do seu avatar')
-                    ->required()
-                    ->imageEditor()
-                    ->avatar()
-                    ->columnSpanFull()
-                    ->alignCenter()
-                    ->label('Escolha seu avatar')
-                    ->image()
-                    ->directory('avatars' . '/' . auth()->id())
-                    ->disk('public')
-                    ->columnSpanFull(),
-                TextInput::make('name')->label('Seu nome')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('email')->label('Seu email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('nickname')
-                    ->label('Seu nickname')
-                    ->hint('Esse nick será usado para montar o link do seu perfil.')
-                    ->validationMessages([
-                        'unique' => 'Este nickname já está em uso.',
-                    ])
-                    ->unique(ignoreRecord: true)
-                    ->required()
-                    ->afterStateUpdated(function (Get $get, $state, Set $set) {
-                        $set('profile_link', url('/') . '/' . $state);
-                    })->reactive()
-                    ->maxLength(255),
-                Select::make('user_type')->label('Tipo de usuário')
-                    ->options([
-                        'admin' => 'Admin',
-                        'user' => 'User',
-                    ]),
-                TextInput::make('password')
-                    ->label('Sua senha')
-                    ->password()
-                    ->dehydrateStateUsing(fn($state) => Hash::make($state))
-                    ->dehydrated(fn($state) => filled($state))
-                    ->required(fn(string $context): bool => $context === 'create'),
+                Tabs::make('Configurações de perfil')
+                    ->tabs([
+                        Tab::make('Informações de perfil')
+                            ->schema([
+                                FileUpload::make('avatar')->label('Escolha a foto do seu avatar')
+                                    ->required()
+                                    ->imageEditor()
+                                    ->avatar()
+                                    ->columnSpanFull()
+                                    ->alignCenter()
+                                    ->label('Escolha seu avatar')
+                                    ->image()
+                                    ->directory('avatars' . '/' . auth()->id())
+                                    ->disk('public')
+                                    ->columnSpanFull(),
+                                TextInput::make('name')->label('Seu nome')
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('email')->label('Seu email')
+                                    ->email()
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('nickname')
+                                    ->label('Seu nickname')
+                                    ->helperText('Esse nick será usado para montar o link do seu perfil e não deve conter espaços ou acentos. Ex: joao_silva')
+                                    ->validationMessages([
+                                        'unique' => 'Este nickname já está em uso.',
+                                    ])
+                                    ->unique(ignoreRecord: true)
+                                    ->required()
+                                    ->afterStateUpdated(function (Get $get, $state, Set $set) {
+                                        $set('profile_link', url('/') . '/dev/' . $state);
+                                    })->reactive()
+                                    ->maxLength(255),
+                                TextInput::make('password')
+                                    ->label('Sua senha')
+                                    ->password()
+                                    ->dehydrateStateUsing(fn($state) => Hash::make($state))
+                                    ->dehydrated(fn($state) => filled($state))
+                                    ->required(fn(string $context): bool => $context === 'create'),
+                                Select::make('user_type')->label('Tipo de usuário')
+                                    ->options([
+                                        'admin' => 'Admin',
+                                        'user' => 'User',
+                                    ]),
+                                TextInput::make('profile_link')
+                                    ->label('Link para seu perfil')
+                                    ->readOnly(),
+                                TextInput::make('occupation')
+                                    ->label('Sua ocupação/profissão'),
+                                Textarea::make('bio')
+                                    ->label('Sua bio')
+                                    ->required()
+                                    ->columnSpanFull(),
+                            ])->columns(2),
+                        Tab::make('Configurações de cores')
+                            ->schema([
+                                ColorPicker::make('primary_color')
+                                    ->label('Cor principal')
+                                    ->required(),
+                                ColorPicker::make('secondary_color')
+                                    ->label('Cor secundária')
+                                    ->required(),
+                                ColorPicker::make('text_color')
+                                    ->label('Cor do texto')
+                                    ->required(),
+                                ColorPicker::make('menu_color')
+                                    ->label('Cor de fundo dos links')
+                                    ->rgba()
+                                    ->required(),
+                            ])->columns(2),
+                        Tab::make('Seus links')
+                            ->schema([
+                                Repeater::make('links')
+                                    ->relationship()
+                                    ->columnSpanFull()
+                                    ->schema([
+                                        TextInput::make('title')
+                                            ->label('Título')
+                                            ->required()
+                                            ->maxLength(255),
+                                        TextInput::make('url')
+                                            ->required()
+                                            ->url()
+                                            ->maxLength(255),
+                                        FileUpload::make('icon')
+                                            ->label('Ícone')
+                                            ->hint('Escolha imagens sem fundos. Ex: .svg, .png')
+                                            ->required()
+                                            ->image()
+                                            ->directory('icons' . '/' . auth()->id())
+                                            ->disk('public')
+                                            ->avatar()
+                                            ->alignCenter(),
+                                    ])->grid(2),
+                            ]),
+                    ])->columnSpanFull(),
+
+
+
+                // TextInput::make('nickname')
+                //     ->label('Seu nickname')
+                //     ->helperText('Esse nick será usado para montar o link do seu perfil e não deve conter espaços ou acentos. Ex: joao_silva')
+                //     ->validationMessages([
+                //         'unique' => 'Este nickname já está em uso.',
+                //     ])
+                //     ->unique(ignoreRecord: true)
+                //     ->required()
+                //     ->afterStateUpdated(function (Get $get, $state, Set $set) {
+                //         $set('profile_link', url('/') . '/dev/' . $state);
+                //     })->reactive()
+                //     ->maxLength(255),
+
+                // TextInput::make('password')
+                //     ->label('Sua senha')
+                //     ->password()
+                //     ->dehydrateStateUsing(fn($state) => Hash::make($state))
+                //     ->dehydrated(fn($state) => filled($state))
+                //     ->required(fn(string $context): bool => $context === 'create'),
                 // ->disabled(fn(): bool => auth()->id() != request()->route('record')),
-                ColorPicker::make('primary_color')
-                    ->label('Cor principal')
-                    ->required(),
-                ColorPicker::make('secondary_color')
-                    ->label('Cor secundária')
-                    ->required(),
-                TextInput::make('profile_link')
-                    ->label('Link para seu perfil')
-                    ->readOnly(),
-                Textarea::make('bio')
-                    ->label('Sua bio')
-                    ->required()
-                    ->columnSpanFull(),
-                Repeater::make('links')
-                    ->relationship()
-                    ->columnSpanFull()
-                    ->schema([
-                        TextInput::make('title')
-                            ->label('Título')
-                            ->required()
-                            ->maxLength(255),
-                        TextInput::make('url')
-                            ->required()
-                            ->url()
-                            ->maxLength(255),
-                        FileUpload::make('icon')
-                            ->label('Ícone')
-                            ->hint('Escolha imagens sem fundos. Ex: .svg, .png')
-                            ->required()
-                            ->image()
-                            ->directory('icons' . '/' . auth()->id())
-                            ->disk('public')
-                            ->avatar()
-                            ->alignCenter(),
-                    ])->grid(2),
+
+
+
+
             ]);
     }
 
@@ -123,10 +175,13 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nome')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->label('Email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nickname')
+                    ->label('Nickname')
                     ->searchable(),
                 ImageColumn::make('avatar')->circular(),
             ])
