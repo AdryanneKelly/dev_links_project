@@ -6,8 +6,10 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use BladeUI\Icons\Components\Icon;
+use Faker\Core\Color;
 use Filament\Forms;
 use Filament\Forms\Components\ColorPicker;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -106,8 +108,14 @@ class UserResource extends Resource
                                 ColorPicker::make('secondary_color')
                                     ->label('Cor secundária')
                                     ->required(),
+                                ColorPicker::make('tertiary_color')
+                                    ->label('Cor terciária')
+                                    ->required(),
                                 ColorPicker::make('text_color')
                                     ->label('Cor do texto')
+                                    ->required(),
+                                ColorPicker::make('border_color')
+                                    ->label('Cor da borda')
                                     ->required(),
                                 ColorPicker::make('menu_color')
                                     ->label('Cor de fundo dos links')
@@ -116,57 +124,52 @@ class UserResource extends Resource
                             ])->columns(2),
                         Tab::make('Seus links')
                             ->schema([
-                                Repeater::make('links')
-                                    ->relationship()
-                                    ->columnSpanFull()
+                                Fieldset::make('Links de botão')
                                     ->schema([
-                                        TextInput::make('title')
-                                            ->label('Título')
-                                            ->required()
-                                            ->maxLength(255),
-                                        TextInput::make('url')
-                                            ->required()
-                                            ->url()
-                                            ->maxLength(255),
-                                        FileUpload::make('icon')
-                                            ->label('Ícone')
-                                            ->hint('Escolha imagens sem fundos. Ex: .svg, .png')
-                                            ->required()
-                                            ->image()
-                                            ->directory('icons' . '/' . auth()->id())
-                                            ->disk('public')
-                                            ->avatar()
-                                            ->alignCenter(),
-                                    ])->grid(2),
+                                        Repeater::make('links')
+                                            ->relationship()
+                                            ->columnSpanFull()
+                                            ->schema([
+                                                TextInput::make('title')
+                                                    ->label('Título')
+                                                    ->required()
+                                                    ->maxLength(255),
+                                                TextInput::make('url')
+                                                    ->required()
+                                                    ->url()
+                                                    ->maxLength(255),
+                                            ])->grid(2),
+
+                                    ]),
+                                Fieldset::make('Links de rodapé')
+                                    ->schema([
+                                        Repeater::make('bottomLinks')
+                                            ->label('Links do rodapé')
+                                            ->relationship()
+                                            ->columnSpanFull()
+                                            ->schema([
+                                                TextInput::make('title')
+                                                    ->label('Título')
+                                                    ->required()
+                                                    ->maxLength(255),
+                                                TextInput::make('url')
+                                                    ->required()
+                                                    ->url()
+                                                    ->maxLength(255),
+                                                FileUpload::make('icon')
+                                                    ->label('Ícone')
+                                                    ->hint('Escolha imagens sem fundos. Ex: .svg, .png')
+                                                    ->required()
+                                                    ->image()
+                                                    ->directory('icons' . '/' . auth()->id())
+                                                    ->disk('public')
+                                                    ->avatar()
+                                                    ->alignCenter(),
+                                            ])->grid(2),
+                                    ]),
+
                             ]),
                     ])->columnSpanFull(),
-
-
-
-                // TextInput::make('nickname')
-                //     ->label('Seu nickname')
-                //     ->helperText('Esse nick será usado para montar o link do seu perfil e não deve conter espaços ou acentos. Ex: joao_silva')
-                //     ->validationMessages([
-                //         'unique' => 'Este nickname já está em uso.',
-                //     ])
-                //     ->unique(ignoreRecord: true)
-                //     ->required()
-                //     ->afterStateUpdated(function (Get $get, $state, Set $set) {
-                //         $set('profile_link', url('/') . '/dev/' . $state);
-                //     })->reactive()
-                //     ->maxLength(255),
-
-                // TextInput::make('password')
-                //     ->label('Sua senha')
-                //     ->password()
-                //     ->dehydrateStateUsing(fn($state) => Hash::make($state))
-                //     ->dehydrated(fn($state) => filled($state))
-                //     ->required(fn(string $context): bool => $context === 'create'),
-                // ->disabled(fn(): bool => auth()->id() != request()->route('record')),
-
-
-
-
             ]);
     }
 

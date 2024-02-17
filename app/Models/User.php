@@ -26,6 +26,8 @@ class User extends Authenticatable
         'avatar',
         'primary_color',
         'secondary_color',
+        'tertiary_color',
+        'border_color',
         'user_type',
         'profile_link',
         'text_color',
@@ -56,5 +58,10 @@ class User extends Authenticatable
     public function links()
     {
         return $this->hasMany(Link::class, 'users_id');
+    }
+
+    public function bottomLinks()
+    {
+        return $this->hasMany(BottomLink::class);
     }
 }
