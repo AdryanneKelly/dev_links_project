@@ -26,7 +26,7 @@
         </div>
         @endif
         <div>
-            <p>Copyright &copy; DevLinks 2024</p>
+            <p>Copyright &copy; DevLinks 2024 - Developed by <b>Ackalantys Dev</b></p>
         </div>
     </div>
 

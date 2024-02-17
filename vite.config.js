@@ -9,6 +9,7 @@ export default defineConfig({
             refresh: [
                 ...refreshPaths,
                 'app/Livewire/**',
+                'resources/views/**/*.blade.php',
             ],
         }),
     ],
