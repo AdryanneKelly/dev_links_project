@@ -22,8 +22,10 @@
                         </a>
                     </div>
                     <div>
-                        <a href="/login" class="text-white font-bold">Login</a>
-                        <a href="/register" class="text-white font-bold ml-4">Register</a>
+                        <a href="/login"
+                            class="text-white font-bold hover:bg-gradient-to-r hover:from-purple-600 hover:via-blue-500 hover:to-cyan-400 hover:text-transparent hover:bg-clip-text hover:transition-all hover:duration-300">Login</a>
+                        <a href="/register"
+                            class="text-white font-bold ml-7 hover:bg-gradient-to-r hover:from-purple-600 hover:via-blue-500 hover:to-cyan-400 hover:text-transparent hover:bg-clip-text hover:transition-all hover:duration-300">Register</a>
                     </div>
                 </div>
             </div>
@@ -34,7 +36,7 @@
                     <h1 class="text-4xl font-bold text-white">Welcome to DevLinks</h1>
                     <p class="text-white text-2xl font-medium mt-4">A place to share your links with the world</p>
                     <a href="/register"
-                        class="bg-white bg-opacity-30 text-white font-bold px-6 py-2 rounded-full inline-block mt-4 shadow-lg border-4">Get
+                        class="bg-white bg-opacity-30 hover:bg-opacity-15 text-white font-bold px-6 py-2 rounded-full inline-block mt-4 shadow-lg border-4">Get
                         Started</a>
                 </div>
             </div>

@@ -10,6 +10,7 @@ use Filament\Pages\Auth\Register;
 use Filament\Pages\Page;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterProfile extends Register
@@ -24,6 +25,9 @@ class RegisterProfile extends Register
                     ->validationMessages([
                         'unique' => 'Este nickname já está em uso.',
                     ])
+                    ->afterStateUpdated(function ($state, Set $set) {
+                        $set('profile_link', url('/') . '/dev/' . $state);
+                    })->reactive()
                     ->unique('users', 'nickname')
                     ->maxLength(255),
                 $this->getNameFormComponent()

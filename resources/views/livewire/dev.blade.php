@@ -5,10 +5,10 @@
         <h1 class="text-3xl font-bold">{{$dev->name}}</h1>
         <h2 class="text-xl font-bold">{{$dev->occupation}}</h2>
         <p class="max-w-[600px]">{{$dev->bio}}</p>
-        <div class="flex flex-wrap gap-3 flex-col pt-5">
+        <div class="flex flex-wrap gap-3 flex-col pt-5 max-sm:px-5 ">
             @foreach ($dev->links as $link)
-            <a href="{{$link->url}}" target="_blank" class="flex flex-col items-center gap-1">
-                <div class="w-[550px] h-14 flex flex-col justify-center rounded-xl font-bold border"
+            <a href="{{$link->url}}" target="_blank" class="flex flex-col items-center gap-1 ">
+                <div class="w-[550px] max-sm:max-w-80 h-14 flex flex-col justify-center rounded-xl font-bold border"
                     style="background-color: {{$dev->menu_color}}; border-color: {{$dev->border_color}}">
                     <span class="z-10">{{$link->title}}</span>
                 </div>
@@ -18,7 +18,7 @@
         @if ($dev->bottomLinks)
         <div class="py-10 w-full flex flex-row justify-center gap-6">
             @foreach ($dev->bottomLinks as $link)
-            <a href="" class="text-black">
+            <a href="{{ $link->url }}" class="text-black" target="_blank">
                 <img src="{{asset('storage/' . $link->icon)}}" alt="{{$link->title}}"
                     class="w-9 h-9 fill-black text-black">
             </a>
@@ -26,7 +26,7 @@
         </div>
         @endif
         <div>
-            <p>Copyright &copy; DevLinks 2024 - Developed by <b>Ackalantys Dev</b></p>
+            <p class="text-center px-5">Copyright &copy; DevLinks 2024 - Developed by <b>Ackalantys Dev</b></p>
         </div>
     </div>
 
