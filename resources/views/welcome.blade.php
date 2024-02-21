@@ -33,11 +33,11 @@
         <div class="bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-400">
             <div class="flex justify-center items-center h-96">
                 <div class="text-center">
-                    <h1 class="text-4xl font-bold text-white">Welcome to DevLinks</h1>
-                    <p class="text-white text-2xl font-medium mt-4">A place to share your links with the world</p>
+                    <h1 class="text-4xl font-bold text-white">Bem vindo ao DevLinks</h1>
+                    <p class="text-white text-2xl font-medium mt-4">Um lugar para compartilhar seus links com o mundo!
+                    </p>
                     <a href="{{route('filament.admin.auth.register')}}"
-                        class="bg-white bg-opacity-30 hover:bg-opacity-15 text-white font-bold px-6 py-2 rounded-full inline-block mt-4 shadow-lg border-4">Get
-                        Started</a>
+                        class="bg-white bg-opacity-30 hover:bg-opacity-15 text-white font-bold px-6 py-2 rounded-full inline-block mt-4 shadow-lg border-4">Começar</a>
                 </div>
             </div>
         </div>
@@ -63,15 +63,16 @@
                 class="flex flex-row justify-between max-sm:flex max-sm:flex-col max-sm:px-3 max-sm:gap-3 sm:flex sm:flex-col sm:gap-3 lg:flex lg:flex-row">
                 <div class="max-w-[500px] sm:max-w-full">
                     <h2 class="text-3xl font-bold text-white">Como funciona?</h2>
-                    <p class="text-white mt-4 lg:w-96 xl:w-[500px]">Lorem ipsum dolor sit amet consectetur adipisicing
-                        elit. Quisquam, quos.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.Lorem ipsum dolor sit
-                        amet consectetur adipisicing elit. Quisquam, quos.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+                    <p class="text-white mt-4 lg:w-96 xl:w-[500px]">Para começar a usar o DevLinks é muito simples,
+                        basta se cadastrar e começar a montar sua página. Lá você pode adicionar suas informações,
+                        escolher as cores da sua página, adicionar seus links.
+                        Além disso, você pode adicionar um avatar e uma bio para que as pessoas possam te conhecer
+                        melhor.
                     </p>
-                    <p class="text-white mt-4 lg:w-96 xl:w-[500px]">Lorem ipsum dolor sit amet consectetur adipisicing
-                        elit. Quisquam, quos.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                    <p class="text-white mt-4 lg:w-96 xl:w-[500px]">E pronto! Você já tem sua página pronta para ser
+                        compartilhada com o mundo. Você pode compartilhar o link da sua página em suas redes sociais,
+                        currículo, cartão de visitas e muito mais.
                     </p>
                 </div>
                 <img src="{{asset('/images/dev_page.png')}}" alt=""
@@ -82,15 +83,15 @@
             <div class="bg-gray-100  text-white py-8">
                 <div class="container mx-auto">
                     <div class="flex flex-row justify-center space-x-4 pb-10">
-                        <a href="https://www.facebook.com/yourusername" target="_blank"
+                        <a href="https://github.com/AdryanneKelly" target="_blank"
                             class="text-white hover:text-gray-300">
                             <img src="{{ asset('images/github-icon.svg') }}" alt="" class="max-w-9">
                         </a>
-                        <a href="https://www.twitter.com/yourusername" target="_blank"
+                        <a href="https://www.linkedin.com/in/adryanne-kelly/" target="_blank"
                             class="text-white hover:text-gray-300">
-                            <img src="{{ asset('images/twitter-icon.svg') }}" alt="" class="max-w-9">
+                            <img src="{{ asset('images/linkedin-icon.svg') }}" alt="" class="max-w-9">
                         </a>
-                        <a href="https://www.instagram.com/yourusername" target="_blank"
+                        <a href="https://www.instagram.com/drysilva____/" target="_blank"
                             class="text-white hover:text-gray-300">
                             <img src="{{ asset('images/instagram-icon.svg') }}" alt="" class="max-w-9">
                         </a>
