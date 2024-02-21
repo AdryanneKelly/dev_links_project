@@ -34,16 +34,25 @@ class RegisterProfile extends Register
                     ->label('Seu nome')
                     ->required()
                     ->maxLength(255),
-                $this->getEmailFormComponent(),
+                $this->getEmailFormComponent()
+                    ->validationMessages([
+                        'unique' => 'Este email já está em uso.',
+                    ]),
                 $this->getPasswordFormComponent()
                     ->label('Sua senha')
                     ->password()
+                    ->validationMessages([
+                        'min' => 'Sua senha precisa ter no mínimo 8 caracteres.',
+                        'same' => 'As senhas não conferem.',
+                    ])
                     ->dehydrateStateUsing(fn($state) => Hash::make($state))
                     ->dehydrated(fn($state) => filled($state))
                     ->required(fn(string $context): bool => $context === 'create')
                     ->disabled(fn(): bool => auth()->id() != request()->route('record')),
                 $this->getPasswordConfirmationFormComponent(),
-
+                TextInput::make('profile_link')
+                    ->label('Link para seu perfil')
+                    ->readOnly(),
             ]);
     }
 }
