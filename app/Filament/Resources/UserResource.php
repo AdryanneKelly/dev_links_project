@@ -69,9 +69,12 @@ class UserResource extends Resource
                                     ->maxLength(255),
                                 TextInput::make('nickname')
                                     ->label('Seu nickname')
+                                    ->alphaDash()
                                     ->helperText('Esse nick será usado para montar o link do seu perfil e não deve conter espaços ou acentos. Ex: joao_silva')
                                     ->validationMessages([
                                         'unique' => 'Este nickname já está em uso.',
+                                        'alpha_dash' => 'O nickname não pode conter espaços, caracteres especiais ou acentos.',
+                                        'required' => 'O nickname é obrigatório.',
                                     ])
                                     ->unique(ignoreRecord: true)
                                     ->required()
@@ -139,7 +142,6 @@ class UserResource extends Resource
                                                     ->url()
                                                     ->maxLength(255),
                                             ])->grid(2),
-
                                     ]),
                                 Fieldset::make('Links de rodapé')
                                     ->schema([

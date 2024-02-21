@@ -8,7 +8,7 @@
             <div class="h-1 bg-gradient-to-r from-purple-500 via-blue-400 to-cyan-300 rounded-full max-w-44">
             </div>
             <p class="text-4xl max-w-[500px] font-bold uppercase">Usuário não encontrado em nossa base</p>
-            <a href="{{ route('home') }}" class="text-white font-bold text-xl max-w-fit">
+            <a href="{{ route('filament.admin.pages.dashboard') }}" class="text-white font-bold text-xl max-w-fit">
                 <div
                     class="border-4 border-white rounded-full hover:bg-white hover:bg-opacity-20 px-4 py-2 max-w-80 text-center">
                     Voltar para a página inicial

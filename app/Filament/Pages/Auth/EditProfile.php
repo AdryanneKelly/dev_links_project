@@ -39,9 +39,13 @@ class EditProfile extends BaseEditProfile
                                     ->columnSpanFull(),
                                 TextInput::make('nickname')
                                     ->required()
-                                    ->helperText('Esse nick será usado para montar o link do seu perfil e não deve conter espaços ou acentos. Ex: joao_silva')
+                                    ->alphaDash()
+                                    ->inlineLabel(false)
+                                    ->helperText('Esse nick será usado para montar o link do seu perfil e não deve conter espaços, caracteres especiais ou acentos.')
                                     ->validationMessages([
                                         'unique' => 'Este nickname já está em uso.',
+                                        'alpha_dash' => 'O nickname não pode conter espaços, caracteres especiais ou acentos.',
+                                        'required' => 'O nickname é obrigatório.',
                                     ])->afterStateUpdated(function ($state, Set $set) {
                                         $set('profile_link', url('/') . '/dev/' . $state);
                                     })->reactive()
@@ -50,19 +54,22 @@ class EditProfile extends BaseEditProfile
                                 $this->getNameFormComponent()
                                     ->label('Seu nome')
                                     ->required()
+                                    ->inlineLabel(false)
                                     ->maxLength(255),
-                                $this->getEmailFormComponent(),
+                                $this->getEmailFormComponent()->inlineLabel(false),
                                 $this->getPasswordFormComponent()
                                     ->label('Sua senha')
                                     ->password()
+                                    ->inlineLabel(false)
                                     ->dehydrateStateUsing(fn($state) => Hash::make($state))
                                     ->dehydrated(fn($state) => filled($state))
                                     ->required(fn(string $context): bool => $context === 'create')
                                     ->disabled(fn(): bool => auth()->id() != request()->route('record')),
                                 $this->getPasswordConfirmationFormComponent(),
                                 TextInput::make('occupation')
+                                    ->inlineLabel(false)
                                     ->label('Sua ocupação/profissão'),
-                                TextInput::make('profile_link')->label('Link para seu perfil')->readOnly(),
+                                TextInput::make('profile_link')->label('Link para seu perfil')->readOnly()->inlineLabel(false),
                                 Textarea::make('bio')
                                     ->label('Sua bio')
                                     ->inlineLabel(false)

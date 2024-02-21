@@ -74,7 +74,8 @@
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     </p>
                 </div>
-                <img src="{{asset('/images/dev_page.png')}}" alt="" class="max-h-[400px] xl:h-[400px] lg:h-[300px] rounded-xl">
+                <img src="{{asset('/images/dev_page.png')}}" alt=""
+                    class="max-h-[400px] xl:h-[400px] lg:h-[300px] rounded-xl">
             </div>
         </div>
         <footer>
