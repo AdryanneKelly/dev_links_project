@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/dev/{nick}', Dev::class)->name('dev.show');
 Route::get('/notfound', NotFound::class)->name('dev.notfound');
