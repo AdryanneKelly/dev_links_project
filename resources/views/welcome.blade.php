@@ -22,9 +22,9 @@
                         </a>
                     </div>
                     <div>
-                        <a href="{{route('filament.admin.auth.login')}}"
+                        <a href="{{route('filament.admin.auth.login')}}" target="_blank"
                             class="text-white font-bold hover:bg-gradient-to-r hover:from-purple-600 hover:via-blue-500 hover:to-cyan-400 hover:text-transparent hover:bg-clip-text hover:transition-all hover:duration-300">Login</a>
-                        <a href="{{route('filament.admin.auth.register')}}"
+                        <a href="{{route('filament.admin.auth.register')}}" target="_blank"
                             class="text-white font-bold ml-7 hover:bg-gradient-to-r hover:from-purple-600 hover:via-blue-500 hover:to-cyan-400 hover:text-transparent hover:bg-clip-text hover:transition-all hover:duration-300">Register</a>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                     <h1 class="text-4xl font-bold text-white">Bem vindo ao DevLinks</h1>
                     <p class="text-white text-2xl font-medium mt-4">Um lugar para compartilhar seus links com o mundo!
                     </p>
-                    <a href="{{route('filament.admin.auth.register')}}"
+                    <a href="{{route('filament.admin.auth.register')}}" target="_blank"
                         class="bg-white bg-opacity-30 hover:bg-opacity-15 text-white font-bold px-6 py-2 rounded-full inline-block mt-4 shadow-lg border-4">Começar</a>
                 </div>
             </div>
