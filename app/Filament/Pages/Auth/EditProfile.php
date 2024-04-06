@@ -30,9 +30,7 @@ class EditProfile extends BaseEditProfile
                                     ->imageEditor()
                                     ->avatar()
                                     ->inlineLabel(false)
-                                    ->columnSpanFull()
                                     ->alignCenter()
-                                    ->label('Escolha seu avatar')
                                     ->image()
                                     ->directory('avatars' . '/' . auth()->id())
                                     ->disk('public')
@@ -61,7 +59,6 @@ class EditProfile extends BaseEditProfile
                                     ->label('Sua senha')
                                     ->password()
                                     ->inlineLabel(false)
-                                    ->dehydrateStateUsing(fn($state) => Hash::make($state))
                                     ->dehydrated(fn($state) => filled($state))
                                     ->required(fn(string $context): bool => $context === 'create')
                                     ->disabled(fn(): bool => auth()->id() != request()->route('record')),

@@ -85,9 +85,8 @@ class UserResource extends Resource
                                 TextInput::make('password')
                                     ->label('Sua senha')
                                     ->password()
-                                    ->dehydrateStateUsing(fn($state) => Hash::make($state))
-                                    ->dehydrated(fn($state) => filled($state))
-                                    ->required(fn(string $context): bool => $context === 'create'),
+                                    ->dehydrated(fn ($state) => filled($state))
+                                    ->required(fn (string $context): bool => $context === 'create'),
                                 Select::make('user_type')->label('Tipo de usuário')
                                     ->options([
                                         'admin' => 'Admin',

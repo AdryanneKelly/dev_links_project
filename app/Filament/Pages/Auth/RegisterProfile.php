@@ -45,7 +45,6 @@ class RegisterProfile extends Register
                         'min' => 'Sua senha precisa ter no mínimo 8 caracteres.',
                         'same' => 'As senhas não conferem.',
                     ])
-                    ->dehydrateStateUsing(fn($state) => Hash::make($state))
                     ->dehydrated(fn($state) => filled($state))
                     ->required(fn(string $context): bool => $context === 'create')
                     ->disabled(fn(): bool => auth()->id() != request()->route('record')),
