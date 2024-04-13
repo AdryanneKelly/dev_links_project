@@ -12,15 +12,12 @@ class Dev extends Component
 
     public function mount($nick)
     {
-        // $this->nick = $nick;
         $this->dev = User::where('nickname', $nick)->first();
         if (!$this->dev) {
             return redirect()->route('dev.notfound');
         }
 
         $this->dev->primary_color = strval($this->dev->primary_color);
-        // dump($this->dev);
-
     }
     public function render()
     {
